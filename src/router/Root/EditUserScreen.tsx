@@ -1,12 +1,14 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 
-const AddUsersScreen = (): JSX.Element => {
+
+
+const Users = (): JSX.Element => {
     return (
         <View>
-            <Text>Add Users Screen</Text>
+            <Text>USERS EDIT SCREEN</Text>
         </View>
     )
 }
 
-export default AddUsersScreen
+export default Users

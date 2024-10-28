@@ -29,6 +29,11 @@ const useValidation = (
       return false;
     }
 
+    if (!/^[a-zA-Z0-9]*$/.test(login) || !/^[a-zA-Z0-9]*$/.test(password) || (options?.checkConfirmPassword && !/^[a-zA-Z0-9]*$/.test(confirmPassword.trim()))) {
+      Alert.alert('Ошибка', 'Логин и пароль должны содержать только английские буквы');
+      return false;
+    }
+
     if (options?.checkConfirmPassword && password !== confirmPassword) {
       Alert.alert('Ошибка', 'Пароли не совпадают');
       return false;

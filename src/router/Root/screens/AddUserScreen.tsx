@@ -1,12 +1,14 @@
-// *** IMPORTS ***
+// *** NPM ***
 import React, { useLayoutEffect, useState } from 'react';
 import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { AddUserScreenNavigationProp } from '../RootNavigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { User } from './UsersScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { TextInput, useTheme } from 'react-native-paper'
+
+// *** OTHER ***
+import { User } from './UsersScreen';
+import { AddUserScreenNavigationProp } from '../RootNavigation';
 import useValidation from '../../../hooks/useValidation';
-import { TextInput } from 'react-native-paper'
 
 // *** TYPES ***
 interface IProps {
@@ -14,6 +16,10 @@ interface IProps {
 }
 
 const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
+    // *** THEME ***
+    const { colors } = useTheme()
+
+    // *** USE STATE ***
     const [username, setUserName] = useState('');
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
@@ -21,6 +27,7 @@ const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+    // *** USE VALIDATE ***
     const { validateFields, validateWithServer } = useValidation(
         username.trim(),
         login.trim(),
@@ -68,7 +75,7 @@ const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: colors.background }]}>
             <TextInput
                 placeholder="Название"
                 value={username}
@@ -77,7 +84,7 @@ const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
                 textColor='white'
                 activeUnderlineColor='white'
                 placeholderTextColor="#A5A5A6"
-                style={styles.input}
+                style={[styles.input, { backgroundColor: colors.background }]}
             />
             <TextInput
                 placeholder="Логин"
@@ -87,7 +94,7 @@ const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
                 textColor='white'
                 activeUnderlineColor='white'
                 placeholderTextColor="#A5A5A6"
-                style={[styles.input, styles.inputMargin]}
+                style={[styles.input, styles.inputMargin, { backgroundColor: colors.background }]}
             />
             <TextInput
                 placeholder="Пароль"
@@ -108,7 +115,7 @@ const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
                         onPress={() => setShowConfirmPassword(prev => !prev)}
                     />
                 }
-                style={[styles.input, styles.inputMargin]}
+                style={[styles.input, styles.inputMargin, { backgroundColor: colors.background }]}
             />
             <TextInput
                 placeholder="Повтор пароля"
@@ -129,7 +136,7 @@ const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
                         onPress={() => setShowPassword(prev => !prev)}
                     />
                 }
-                style={[styles.input, styles.inputMargin]}
+                style={[styles.input, styles.inputMargin, { backgroundColor: colors.background }]}
             />
         </View>
     );
@@ -140,7 +147,6 @@ const styles = StyleSheet.create({
     container: {
         padding: 20,
         flex: 1,
-        backgroundColor: '#141517',
     },
     headerLeft: {
         flexDirection: 'row',
@@ -155,7 +161,6 @@ const styles = StyleSheet.create({
     input: {
         fontSize: 18,
         color: 'white',
-        backgroundColor: '#141517',
         borderColor: 'white',
     },
     inputMargin: {

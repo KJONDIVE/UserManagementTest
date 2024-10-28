@@ -1,9 +1,9 @@
-// *** NPM  ***
+// *** NPM ***
 import React, { useLayoutEffect, useState } from 'react'
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { TextInput } from "react-native-paper"
+import { TextInput, useTheme } from "react-native-paper"
 
 // *** OTHER ***
 import useValidation from '../../../hooks/useValidation';
@@ -17,6 +17,9 @@ interface IProps {
 }
 
 const EditUserScreen = (props: IProps): JSX.Element => {
+    // *** THEME ***
+    const { colors } = useTheme();
+
     // *** PROPS ***
     const { navigation, route } = props
 
@@ -80,7 +83,7 @@ const EditUserScreen = (props: IProps): JSX.Element => {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: colors.background }]}>
             <TextInput
                 placeholder="Название"
                 value={username}
@@ -89,7 +92,7 @@ const EditUserScreen = (props: IProps): JSX.Element => {
                 textColor='white'
                 activeUnderlineColor='white'
                 placeholderTextColor="#A5A5A6"
-                style={styles.input}
+                style={[styles.input, { backgroundColor: colors.background }]}
             />
             <TextInput
                 placeholder="Логин"
@@ -99,7 +102,7 @@ const EditUserScreen = (props: IProps): JSX.Element => {
                 textColor='white'
                 activeUnderlineColor='white'
                 placeholderTextColor="#A5A5A6"
-                style={[styles.input, styles.inputMargin]}
+                style={[styles.input, styles.inputMargin, { backgroundColor: colors.background }]}
             />
             <TextInput
                 placeholder="Пароль"
@@ -120,7 +123,7 @@ const EditUserScreen = (props: IProps): JSX.Element => {
                         onPress={() => setShowConfirmPassword(prev => !prev)}
                     />
                 }
-                style={[styles.input, styles.inputMargin]}
+                style={[styles.input, styles.inputMargin, { backgroundColor: colors.background }]}
             />
         </View>
     )
@@ -131,7 +134,6 @@ const styles = StyleSheet.create({
     container: {
         padding: 20,
         flex: 1,
-        backgroundColor: '#141517',
     },
     headerLeft: {
         flexDirection: 'row',
@@ -146,7 +148,6 @@ const styles = StyleSheet.create({
     input: {
         fontSize: 18,
         color: 'white',
-        backgroundColor: '#141517',
         borderColor: 'white',
     },
     inputMargin: {

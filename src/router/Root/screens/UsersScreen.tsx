@@ -1,9 +1,10 @@
 // *** NPM ***
 import React, { useEffect, useState } from 'react';
-import { Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
+import { useTheme, Text } from "react-native-paper"
 
 // *** OTHER ***
 import { UsersScreenNavigationProp } from '../RootNavigation';
@@ -20,6 +21,10 @@ interface IProps {
 }
 
 const UsersScreen = ({ navigation }: IProps): JSX.Element => {
+    // *** THEME ***
+    const { colors } = useTheme();
+
+    // *** USE STATE ***
     const [users, setUsers] = useState<User[]>([]);
     const isFocused = useIsFocused();
 
@@ -75,7 +80,7 @@ const UsersScreen = ({ navigation }: IProps): JSX.Element => {
     );
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, {backgroundColor: colors.background }]}>
             {users.length === 0 ? (
                 <Text style={styles.emptyText}>Пользователи отсутсвуют</Text>
             ) : (
@@ -92,7 +97,6 @@ const UsersScreen = ({ navigation }: IProps): JSX.Element => {
 // *** STYLES ***
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#141517',
         flex: 1,
     },
     emptyText: {

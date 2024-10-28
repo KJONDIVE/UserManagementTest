@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { RouteProp } from '@react-navigation/native';
+import { useTheme } from "react-native-paper"
 
 // *** OTHER ***
 import UsersScreen from './screens/UsersScreen';
@@ -56,6 +57,9 @@ const renderHeaderLeftForAddUserScreen = (navigation: AddUserScreenNavigationPro
 
 // *** ROOT NAVIGATION ***
 const RootNavigation = (): JSX.Element => {
+  // *** THEME ***
+  const { colors } = useTheme()
+
   return (
     <Stack.Navigator initialRouteName="UsersScreen">
       {/* Users Screen */}
@@ -64,7 +68,7 @@ const RootNavigation = (): JSX.Element => {
         component={UsersScreen}
         options={({ navigation }: { navigation: UsersScreenNavigationProp }) => ({
           title: '',
-          headerStyle: { backgroundColor: '#141517' },
+          headerStyle: { backgroundColor: colors.background },
           headerLeft: () => renderHeaderLeftForUsersScreen(navigation),
           headerRight: () => renderHeaderRightForUsersScreen(navigation),
         })}
@@ -75,7 +79,7 @@ const RootNavigation = (): JSX.Element => {
         component={AddUserScreen}
         options={({ navigation }: { navigation: AddUserScreenNavigationProp }) => ({
           title: '',
-          headerStyle: { backgroundColor: '#141517' },
+          headerStyle: { backgroundColor: colors.background },
           headerLeft: () => renderHeaderLeftForAddUserScreen(navigation),
         })}
       />
@@ -85,7 +89,7 @@ const RootNavigation = (): JSX.Element => {
         component={EditUserScreen}
         options={({ navigation }: { navigation: EditUserScreenNavigationProp }) => ({
           title: '',
-          headerStyle: { backgroundColor: '#141517' },
+          headerStyle: { backgroundColor: colors.background },
         })}
       />
     </Stack.Navigator>

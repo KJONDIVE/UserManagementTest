@@ -1,6 +1,9 @@
 // *** NPM ***
 import { Alert } from 'react-native';
 
+// *** CONSTANTS ***
+const API_URL = 'https://ipcama.ru/api/Login';
+
 // *** TYPES ***
 interface ValidationOptions {
   checkConfirmPassword?: boolean;
@@ -17,7 +20,7 @@ const useValidation = (username: string, login: string, password: string, confir
     }
 
     if (/\s/.test(username) || /\s/.test(login) || /\s/.test(password) || (options?.checkConfirmPassword && /\s/.test(confirmPassword.trim()))) {
-      Alert.alert('Ошибка', 'Поля не должны содержать пробелов');
+      Alert.alert('Ошибка', 'Поля не должны содержать пробелы');
       return false;
     }
 
@@ -37,7 +40,7 @@ const useValidation = (username: string, login: string, password: string, confir
       params.append('Login', login);
       params.append('Password', password);
 
-      const response = await fetch('https://ipcama.ru/api/Login', {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',

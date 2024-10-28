@@ -57,7 +57,7 @@ const UsersScreen = ({ navigation }: IProps): JSX.Element => {
             <Text style={styles.userLogin}>{user.login}</Text>
             <View style={styles.userActions}>
                 <TouchableOpacity
-                    style={styles.iconButton}
+                    style={styles.iconSettingButton}
                     onPress={() =>
                         navigation.navigate('EditUserScreen', {
                             username: user.username,
@@ -65,9 +65,9 @@ const UsersScreen = ({ navigation }: IProps): JSX.Element => {
                             password: user.password,
                         })
                     }>
-                    <Feather name='settings' color="#A5A5A6" size={20} />
+                    <Feather name='settings' color="white" size={21} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.iconButton} onPress={() => deleteUserHandler(user.username)}>
+                <TouchableOpacity style={styles.iconDeleteButton} onPress={() => deleteUserHandler(user.username)}>
                     <Feather name='trash-2' color="#A5A5A6" size={21} />
                 </TouchableOpacity>
             </View>
@@ -117,9 +117,13 @@ const styles = StyleSheet.create({
     userActions: {
         flexDirection: 'row',
     },
-    iconButton: {
+    iconSettingButton: {
         padding: 5,
+        marginRight: 10
     },
+    iconDeleteButton: {
+        padding: 5,
+    }
 });
 
 export default UsersScreen;

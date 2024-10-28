@@ -32,7 +32,7 @@ export type EditUserScreenRouteProp = RouteProp<TNavigationStackProps, 'EditUser
 // *** HEADER CONFIGURATION ***
 const renderHeaderLeftForUsersScreen = (navigation: UsersScreenNavigationProp) => (
   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-    <TouchableOpacity onPress={() => navigation.navigate('AddUserScreen')}>
+    <TouchableOpacity>
       <Ionicons name="menu" size={25} color="#fff" />
     </TouchableOpacity>
     <Text style={{ color: 'white', fontWeight: '600', paddingLeft: 10, fontSize: 16 }}>Пользователи</Text>

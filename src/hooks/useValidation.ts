@@ -6,19 +6,24 @@ interface ValidationOptions {
   checkConfirmPassword?: boolean;
 }
 
-const useValidation = (login: string, password: string, confirmPassword: string, options?: ValidationOptions) => {
+const useValidation = (username: string, login: string, password: string, confirmPassword: string, options?: ValidationOptions) => {
   
   // *** FIELD VALIDATION ***
   const validateFields = (): boolean => {
     // Check for empty fields
-    if (!login.trim() || !password.trim() || (options?.checkConfirmPassword && !confirmPassword.trim())) {
-      Alert.alert('Error', 'Fields cannot be empty or contain only spaces.');
+    if (!username || !login || !password || (options?.checkConfirmPassword && !confirmPassword)) {
+      Alert.alert('Ошибка', 'Поля не могут быть пустыми');
+      return false;
+    }
+
+    if (/\s/.test(username) || /\s/.test(login) || /\s/.test(password) || (options?.checkConfirmPassword && /\s/.test(confirmPassword.trim()))) {
+      Alert.alert('Ошибка', 'Поля не должны содержать пробелов');
       return false;
     }
 
     // Check if passwords match
     if (options?.checkConfirmPassword && password !== confirmPassword) {
-      Alert.alert('Error', 'Passwords do not match.');
+      Alert.alert('Ошибка', 'Пароли не совпадают');
       return false;
     }
 
@@ -50,14 +55,13 @@ const useValidation = (login: string, password: string, confirmPassword: string,
 
       // Validate session ID and user ID
       if (data.SessionID && data.UserID) {
-        console.log('Login successful:', data);
         return true;
       } else {
-        Alert.alert('Error', 'Server validation failed.');
+        Alert.alert('Ошибка', 'Проверка сервера не удалась');
         return false;
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to connect to the server.');
+      Alert.alert('Ошибка', 'Ошибка подключения к серверу');
       return false;
     }
   };
@@ -65,9 +69,9 @@ const useValidation = (login: string, password: string, confirmPassword: string,
   // *** ERROR HANDLING ***
   const handleServerError = (data: any) => {
     if (data.Error) {
-      Alert.alert('Error', data.Error);
+      Alert.alert('Ошибка', data.Error);
     } else {
-      Alert.alert('Error', 'Invalid login or password.');
+      Alert.alert('Ошибка', 'Неверный логин или пароль.');
     }
   };
 

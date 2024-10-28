@@ -98,6 +98,8 @@ const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
                 textColor='white'
                 activeUnderlineColor='white'
                 placeholderTextColor="#A5A5A6"
+                textContentType="none"
+                autoComplete="off"
                 right={
                     <TextInput.Icon
                         icon={showConfirmPassword ? 'eye-off' : 'eye'}
@@ -117,7 +119,8 @@ const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
                 underlineColor='white'
                 activeUnderlineColor='white'
                 placeholderTextColor="#A5A5A6"
-                style={[styles.input, styles.inputMargin]}
+                textContentType="none"
+                autoComplete="off"
                 right={
                     <TextInput.Icon
                         icon={showPassword ? 'eye-off' : 'eye'}
@@ -126,6 +129,7 @@ const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
                         onPress={() => setShowPassword(prev => !prev)}
                     />
                 }
+                style={[styles.input, styles.inputMargin]}
             />
         </View>
     );

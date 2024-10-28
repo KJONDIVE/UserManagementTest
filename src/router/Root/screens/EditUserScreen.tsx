@@ -110,6 +110,8 @@ const EditUserScreen = (props: IProps): JSX.Element => {
                 textColor='white'
                 activeUnderlineColor='white'
                 placeholderTextColor="#A5A5A6"
+                textContentType="none"
+                autoComplete="off"
                 right={
                     <TextInput.Icon
                         icon={showConfirmPassword ? 'eye-off' : 'eye'}

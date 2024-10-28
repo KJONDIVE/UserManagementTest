@@ -5,13 +5,13 @@
 Сначала клонируйте репозиторий с кодом проекта:
 
 ```bash
-git clone https://github.com/KJONDIVE/SETest.git
+git clone https://github.com/KJONDIVE/UserManagementTest.git
 ```
 
 Перейдите в корневую папку проекта через терминал:
 
 ```bash
-cd ./SETest
+cd ./UserManagementTest
 ```
 
 ## Шаг 2: Установка зависимостей

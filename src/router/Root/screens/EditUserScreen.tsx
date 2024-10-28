@@ -113,7 +113,7 @@ const EditUserScreen = (props: IProps): JSX.Element => {
                 textColor='white'
                 activeUnderlineColor='white'
                 placeholderTextColor="#A5A5A6"
-                textContentType="none"
+                textContentType={'oneTimeCode'}
                 autoComplete="off"
                 right={
                     <TextInput.Icon
@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: 'white',
         borderColor: 'white',
+        height: 45,
     },
     inputMargin: {
         marginTop: 30,

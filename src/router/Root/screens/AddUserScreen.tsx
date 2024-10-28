@@ -1,11 +1,12 @@
 // *** IMPORTS ***
 import React, { useLayoutEffect, useState } from 'react';
-import { Alert, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { AddUserScreenNavigationProp } from '../RootNavigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { User } from './UsersScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import useValidation from '../../../hooks/useValidation';
+import { TextInput } from 'react-native-paper'
 
 // *** TYPES ***
 interface IProps {
@@ -17,11 +18,14 @@ const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const { validateFields, validateWithServer } = useValidation(
-        login,
-        password,
-        confirmPassword,
+        username.trim(),
+        login.trim(),
+        password.trim(),
+        confirmPassword.trim(),
         {
             checkConfirmPassword: true,
         }
@@ -53,7 +57,11 @@ const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
             return;
         }
 
-        const newUser: User = { username, login, password };
+        const newUser: User = {
+            username: username.trim(),
+            login: login.trim(),
+            password: password.trim()
+        };
         users.push(newUser);
         await AsyncStorage.setItem('users', JSON.stringify(users));
         navigation.goBack();
@@ -65,6 +73,9 @@ const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
                 placeholder="Название"
                 value={username}
                 onChangeText={setUserName}
+                underlineColor='white'
+                textColor='white'
+                activeUnderlineColor='white'
                 placeholderTextColor="#A5A5A6"
                 style={styles.input}
             />
@@ -72,6 +83,9 @@ const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
                 placeholder="Логин"
                 value={login}
                 onChangeText={setLogin}
+                underlineColor='white'
+                textColor='white'
+                activeUnderlineColor='white'
                 placeholderTextColor="#A5A5A6"
                 style={[styles.input, styles.inputMargin]}
             />
@@ -79,17 +93,39 @@ const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
                 placeholder="Пароль"
                 value={password}
                 onChangeText={setPassword}
-                secureTextEntry
+                secureTextEntry={!showConfirmPassword}
+                underlineColor='white'
+                textColor='white'
+                activeUnderlineColor='white'
                 placeholderTextColor="#A5A5A6"
+                right={
+                    <TextInput.Icon
+                        icon={showConfirmPassword ? 'eye-off' : 'eye'}
+                        color={'white'}
+                        size={20}
+                        onPress={() => setShowConfirmPassword(prev => !prev)}
+                    />
+                }
                 style={[styles.input, styles.inputMargin]}
             />
             <TextInput
                 placeholder="Повтор пароля"
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
-                secureTextEntry
+                secureTextEntry={!showPassword}
+                textColor='white'
+                underlineColor='white'
+                activeUnderlineColor='white'
                 placeholderTextColor="#A5A5A6"
                 style={[styles.input, styles.inputMargin]}
+                right={
+                    <TextInput.Icon
+                        icon={showPassword ? 'eye-off' : 'eye'}
+                        color={'white'}
+                        size={20}
+                        onPress={() => setShowPassword(prev => !prev)}
+                    />
+                }
             />
         </View>
     );
@@ -113,10 +149,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     input: {
-        borderBottomWidth: 1,
-        fontSize: 20,
-        color: '#A5A5A6',
-        padding: 5,
+        fontSize: 18,
+        color: 'white',
+        backgroundColor: '#141517',
         borderColor: 'white',
     },
     inputMargin: {

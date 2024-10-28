@@ -151,8 +151,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: '50%',
         left: '50%',
-        marginLeft: -20,
-        marginTop: -20,
     },
     headerTitle: {
         color: 'white',

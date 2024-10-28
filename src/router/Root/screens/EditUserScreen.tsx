@@ -3,7 +3,7 @@ import React, { useLayoutEffect, useState } from 'react'
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { TextInput, useTheme } from "react-native-paper"
+import { TextInput, useTheme, ActivityIndicator } from "react-native-paper"
 
 // *** OTHER ***
 import useValidation from '../../../hooks/useValidation';
@@ -28,9 +28,16 @@ const EditUserScreen = (props: IProps): JSX.Element => {
     const [login, setLogin] = useState(route.params.login);
     const [password, setPassword] = useState(route.params.password);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
 
     // USE VALIDATION HOOK
-    const { validateFields, validateWithServer } = useValidation(username.trim(), login.trim(), password.trim(), '', { checkConfirmPassword: false });
+    const { validateFields, validateWithServer } = useValidation(
+        username.trim(),
+        login.trim(),
+        password.trim(),
+        '',
+        { checkConfirmPassword: false },
+        setIsLoading);
 
     // *** HEADER CONFIGURATION ***
     useLayoutEffect(() => {
@@ -84,6 +91,7 @@ const EditUserScreen = (props: IProps): JSX.Element => {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
+            {isLoading && <ActivityIndicator size="large" color="#ffffff" style={styles.loadingIndicator} />}
             <TextInput
                 placeholder="Название"
                 value={username}
@@ -138,6 +146,13 @@ const styles = StyleSheet.create({
     headerLeft: {
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    loadingIndicator: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginLeft: -20,
+        marginTop: -20,
     },
     headerTitle: {
         color: 'white',

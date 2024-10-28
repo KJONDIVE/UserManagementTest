@@ -3,7 +3,7 @@ import React, { useLayoutEffect, useState } from 'react';
 import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { TextInput, useTheme } from 'react-native-paper'
+import { ActivityIndicator, TextInput, useTheme } from 'react-native-paper'
 
 // *** OTHER ***
 import { User } from './UsersScreen';
@@ -26,6 +26,7 @@ const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false); 
 
     // *** USE VALIDATE ***
     const { validateFields, validateWithServer } = useValidation(
@@ -35,7 +36,8 @@ const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
         confirmPassword.trim(),
         {
             checkConfirmPassword: true,
-        }
+        },
+        setIsLoading
     );
 
     // *** HEADER CONFIGURATION ***
@@ -76,6 +78,7 @@ const AddUsersScreen = ({ navigation }: IProps): JSX.Element => {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
+              {isLoading && <ActivityIndicator size="large" color="#ffffff" style={styles.loadingIndicator} />}
             <TextInput
                 placeholder="Название"
                 value={username}
@@ -157,6 +160,13 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         paddingLeft: 10,
         fontSize: 16,
+    },
+    loadingIndicator: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginLeft: -20,
+        marginTop: -20,
     },
     input: {
         fontSize: 18,

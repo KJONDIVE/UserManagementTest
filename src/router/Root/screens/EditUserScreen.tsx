@@ -1,8 +1,9 @@
 // *** NPM  ***
 import React, { useLayoutEffect, useState } from 'react'
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { TextInput } from "react-native-paper"
 
 // *** OTHER ***
 import useValidation from '../../../hooks/useValidation';
@@ -23,9 +24,10 @@ const EditUserScreen = (props: IProps): JSX.Element => {
     const [username, setUserName] = useState(route.params.username);
     const [login, setLogin] = useState(route.params.login);
     const [password, setPassword] = useState(route.params.password);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
     // USE VALIDATION HOOK
-    const { validateFields, validateWithServer } = useValidation(login, password, '', { checkConfirmPassword: false });
+    const { validateFields, validateWithServer } = useValidation(username.trim(), login.trim(), password.trim(), '', { checkConfirmPassword: false });
 
     // *** HEADER CONFIGURATION ***
     useLayoutEffect(() => {
@@ -66,7 +68,12 @@ const EditUserScreen = (props: IProps): JSX.Element => {
             return;
         }
 
-        users[userIndex] = { ...users[userIndex], username, login, password };
+        users[userIndex] = {
+            ...users[userIndex],
+            username: username.trim(),
+            login: login.trim(),
+            password: password.trim()
+        };
 
         await AsyncStorage.setItem('users', JSON.stringify(users));
         navigation.goBack();
@@ -78,6 +85,9 @@ const EditUserScreen = (props: IProps): JSX.Element => {
                 placeholder="Название"
                 value={username}
                 onChangeText={setUserName}
+                underlineColor='white'
+                textColor='white'
+                activeUnderlineColor='white'
                 placeholderTextColor="#A5A5A6"
                 style={styles.input}
             />
@@ -85,6 +95,9 @@ const EditUserScreen = (props: IProps): JSX.Element => {
                 placeholder="Логин"
                 value={login}
                 onChangeText={setLogin}
+                underlineColor='white'
+                textColor='white'
+                activeUnderlineColor='white'
                 placeholderTextColor="#A5A5A6"
                 style={[styles.input, styles.inputMargin]}
             />
@@ -92,8 +105,19 @@ const EditUserScreen = (props: IProps): JSX.Element => {
                 placeholder="Пароль"
                 value={password}
                 onChangeText={setPassword}
-                secureTextEntry
+                secureTextEntry={!showConfirmPassword}
+                underlineColor='white'
+                textColor='white'
+                activeUnderlineColor='white'
                 placeholderTextColor="#A5A5A6"
+                right={
+                    <TextInput.Icon
+                        icon={showConfirmPassword ? 'eye-off' : 'eye'}
+                        color={'white'}
+                        size={20}
+                        onPress={() => setShowConfirmPassword(prev => !prev)}
+                    />
+                }
                 style={[styles.input, styles.inputMargin]}
             />
         </View>
@@ -118,10 +142,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     input: {
-        borderBottomWidth: 1,
-        fontSize: 20,
-        color: '#A5A5A6',
-        padding: 5,
+        fontSize: 18,
+        color: 'white',
+        backgroundColor: '#141517',
         borderColor: 'white',
     },
     inputMargin: {
